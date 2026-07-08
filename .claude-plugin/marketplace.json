@@ -6,7 +6,7 @@
       "name": "tfmkit",
       "source": "./",
       "description": "The anti-ghostwriter: governed assistance for writing a TFM with integrity. Seven workflow skills (onboard, setup, ingest, draft, cite, check, publish), an external critic subagent, and deterministic Python guardrails. Zero API keys: Claude Code IS the model.",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "category": "writing",
       "keywords": ["tfm", "thesis", "academic-integrity", "anti-ghostwriter"]
     }

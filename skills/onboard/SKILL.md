@@ -24,11 +24,18 @@ is the one thing this tool refuses to do.
 
 ## 2. Auto-provision the environment
 
-1. Check Python: run `python --version` (Windows) or `python3 --version`. Need 3.9+.
-   If missing, guide an install (python.org, or `winget install Python.Python.3.12`) —
-   do it for them where possible.
-2. Install the two dependencies quietly: `pip install pyyaml python-docx`.
-3. Smoke-test: run `python "${CLAUDE_PLUGIN_ROOT}/scripts/signals.py" --help`. If it
+1. Check Python (need 3.9+). On Windows check BOTH `py --version` and
+   `python --version` — beware the trap: on a fresh Windows machine `python` is a
+   Microsoft Store stub that opens the Store instead of failing. If the output looks
+   empty or mentions the Store, Python is NOT installed. Install it yourself with
+   `winget install -e --id Python.Python.3.12` (on macOS/Linux: python.org or the
+   package manager) and re-check.
+2. Install the two dependencies quietly: `pip install pyyaml python-docx`
+   (or `py -m pip install …` if only the `py` launcher works).
+3. Check git: `git --version`. If missing, install it (`winget install -e --id
+   Git.Git`) — it powers the safety net below. If it cannot be installed, continue
+   without it and say so.
+4. Smoke-test: run `python "${CLAUDE_PLUGIN_ROOT}/scripts/signals.py" --help`. If it
    prints usage, the floor is working. Explain in one sentence what the scripts do.
 
 ## 3. Create the project structure
@@ -48,6 +55,13 @@ final/             assembled document and .docx (tfmkit:publish)
 `CLAUDE.md` is what makes every FUTURE chat in this folder self-orienting: the thesis
 spans many sessions, and the files — not the conversation — are the memory. Copy it
 verbatim; do not personalize it.
+
+Then arm the **safety net**: run `git init` in the workspace and make the first commit
+(`git add -A && git commit -m "tfmkit: inicio del proyecto"`). This is a private, local
+history — nothing is uploaded anywhere. Don't burden the student with git concepts; if
+they ask, it is "copias de seguridad automáticas de cada versión". If git is
+unavailable, create a `backups/` folder instead and copy files there before overwriting
+them.
 
 ## 4. Gather the essentials (one question at a time)
 

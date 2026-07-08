@@ -44,6 +44,10 @@ rewrites. Walk the student through each mark; resolving them is the AUTHOR's wor
 
 `python "${CLAUDE_PLUGIN_ROOT}/scripts/lint.py" <file> --config tfm.config.yaml`
 
+When checking a single section draft, pass that section's word limits from
+`tfm.config.yaml` (`sections[].limits`): `--min-words <n> --max-words <n>`. Violations
+are blocking — the guidelines set them, not us.
+
 Report to the student, in their language: unresolved markers, cliché hits, em-dashes,
 flat-rhythm paragraphs, word counts vs limits, and any confidentiality hit (these are
 blocking — the term must leave the text or the list, and that is the student's call

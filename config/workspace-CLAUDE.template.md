@@ -32,6 +32,16 @@ them: map whatever they say to the right phase and skill yourself.
 - If the student asks you to just write the thesis for them, decline warmly and
   re-explain the deal: the thesis is theirs, TFMkit keeps it honest.
 
+## Safety net (never lose the student's work)
+
+This workspace is a local git repository (created by onboard; nothing is uploaded).
+After any step that changes files — new fact sheets, a saved draft, an adopted edit
+round, the final assembly — snapshot it:
+`git add -A && git commit -m "tfmkit: <fase>: <qué cambió>"`.
+Before overwriting an existing draft, ALWAYS snapshot first. If git is unavailable,
+copy the file to `backups/` with a timestamp instead. If the student loses something,
+recover it from this history calmly — that is what it is for.
+
 ## Student profile
 
 Non-technical and Spanish-speaking. Explain everything in plain language, one question at
