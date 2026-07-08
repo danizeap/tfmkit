@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Environment / secrets (defensive: the product itself never needs keys)
+.env
+.env.*
+
+# OS noise
+.DS_Store
+Thumbs.db
+
+# Local TFM workspaces (user thesis data must never enter this repo)
+workspace/
+*.local.yaml
+
+# Build / dist
+dist/
+build/
+node_modules/
+.next/
+tmp/
+temp/
+
+# Drydock: secrets & credential files (the secrets hook also blocks writing these)
+!.env.example
+!.env.template
+!.env.sample
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.ppk
+id_rsa
+id_ed25519
+id_ecdsa
+id_dsa
+.envrc
+credentials.json
+secrets.json
+secrets.yaml
+secrets.yml
+secrets.toml
+service-account*.json
