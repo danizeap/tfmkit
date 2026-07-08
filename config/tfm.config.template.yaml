@@ -1,0 +1,64 @@
+# =============================================================================
+# TFMkit project configuration — TEMPLATE
+# =============================================================================
+# `tfmkit:onboard` copies this file to your thesis workspace as `tfm.config.yaml`
+# and `tfmkit:setup` fills it from YOUR university's guidelines. Everything
+# university-, project- or person-specific lives HERE — never in TFMkit's code.
+
+project:
+  title: ""                # thesis title (leave empty until decided)
+  author: ""               # the student — the real author
+  university: ""           # e.g. your university's name, from your guidelines
+  degree: ""               # official master's degree name
+  academic_year: ""        # e.g. "2026/2027"
+  tutors: []               # each entry: {role: "...", name: "..."}
+  # tutors:
+  #   - role: "Tutor académico"
+  #     name: ""
+  #   - role: "Tutor de empresa"
+  #     name: ""
+
+language: es               # v0.1: Spanish-calibrated tells and lints
+
+# Section registry — filled by `tfmkit:setup` from the university guidelines.
+# voice: primera | impersonal | mixta
+sections: []
+# sections:
+#   - key: resumen
+#     title: "Resumen / Abstract"
+#     voice: impersonal
+#     requirements: >-
+#       Official requirements for this section, in your guidelines' own terms.
+#     limits:
+#       words_min: 150
+#       words_max: 300
+
+limits:
+  total_words_max: null    # overall word ceiling, if the guidelines set one
+  total_pages_max: null
+
+style:
+  target_burstiness: 0.55  # human-band proxy target used by scripts/signals.py
+  max_emdashes: 0          # em-dashes allowed in the final text
+
+# Per-project confidentiality list (NDA terms, partner names, internal figures).
+# Enforced deterministically by scripts/gate.py and scripts/lint.py.
+# TFMkit ships this EMPTY by design: confidential terms belong to YOUR project,
+# never to the tool.
+confidentiality:
+  banned_terms: []
+
+typography:
+  font: "Times New Roman"
+  size_pt: 12
+  line_spacing: 1.5
+  margins_cm:
+    top: 2.5
+    bottom: 2.5
+    left: 3.0
+    right: 3.0
+
+ai_disclosure:
+  include: true            # append the AI-usage declaration on publish
+  tool: ""                 # e.g. "Claude (Anthropic), via Claude Code" — be honest
+  assisted_phases: "redacción de borradores a partir de hechos del autor, edición de estilo y verificación de referencias"
