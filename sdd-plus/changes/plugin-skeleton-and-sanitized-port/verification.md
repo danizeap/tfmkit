@@ -43,8 +43,9 @@ text; no real thesis data):
       verified to load in this Claude Code installation).
 - [x] Seven skills + critic agent reviewed against the port map: sanitized prompt rules
       carried over; UDIT-memoria specifics removed; critic constrained to mark-only.
-- [ ] Plugin end-to-end load test (marketplace add + skill invocation) — deferred to the
-      pilot session this afternoon; disclosed as the one untested surface.
+- [x] Plugin end-to-end load test: installed on the Owner's machine 2026-07-08 via the
+      settings-based marketplace mechanism (extraKnownMarketplaces + enabledPlugins);
+      Owner confirmed the plugin appears alongside Drydock in the app.
 
 ## Documentation Updates
 
