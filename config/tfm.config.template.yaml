@@ -52,6 +52,7 @@ typography:
   font: "Times New Roman"
   size_pt: 12
   line_spacing: 1.5
+  include_toc: true        # paginated table of contents after the cover
   margins_cm:
     top: 2.5
     bottom: 2.5

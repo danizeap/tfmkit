@@ -56,9 +56,35 @@ def strip_fact_tags(md: str) -> str:
     return re.sub(r"\s*\[F\d+\]", "", md)
 
 
+def _field(paragraph, instr: str, placeholder: str = "") -> None:
+    """Insert a Word field (PAGE, TOC…). Word computes it; for TOC the reader updates with F9."""
+    from docx.oxml import OxmlElement
+    from docx.oxml.ns import qn
+
+    run = paragraph.add_run()
+    begin = OxmlElement("w:fldChar")
+    begin.set(qn("w:fldCharType"), "begin")
+    instr_el = OxmlElement("w:instrText")
+    instr_el.set(qn("xml:space"), "preserve")
+    instr_el.text = instr
+    run._r.append(begin)
+    run._r.append(instr_el)
+    if placeholder:
+        sep = OxmlElement("w:fldChar")
+        sep.set(qn("w:fldCharType"), "separate")
+        run._r.append(sep)
+        text = OxmlElement("w:t")
+        text.text = placeholder
+        run._r.append(text)
+    end = OxmlElement("w:fldChar")
+    end.set(qn("w:fldCharType"), "end")
+    run._r.append(end)
+
+
 def build_docx(md: str, out: str, cfg: dict) -> None:
     import docx
-    from docx.shared import Cm, Pt
+    from docx.enum.text import WD_ALIGN_PARAGRAPH
+    from docx.shared import Cm, Pt, RGBColor
 
     project = cfg.get("project") or {}
     typo = cfg.get("typography") or {}
@@ -72,6 +98,17 @@ def build_docx(md: str, out: str, cfg: dict) -> None:
         style.font.size = Pt(float(typo["size_pt"]))
     if typo.get("line_spacing"):
         style.paragraph_format.line_spacing = float(typo["line_spacing"])
+
+    # Headings follow the configured font too (Word's theme default is a different,
+    # colored font — an instant guideline violation if left as-is).
+    base_pt = float(typo.get("size_pt") or 12)
+    for name, delta in (("Heading 1", 4), ("Heading 2", 2), ("Heading 3", 1), ("Title", 8)):
+        h = d.styles[name]
+        if typo.get("font"):
+            h.font.name = str(typo["font"])
+        h.font.size = Pt(base_pt + delta)
+        h.font.color.rgb = RGBColor(0, 0, 0)
+
     margins = typo.get("margins_cm") or {}
     for section in d.sections:
         if margins.get("top"):
@@ -82,6 +119,13 @@ def build_docx(md: str, out: str, cfg: dict) -> None:
             section.left_margin = Cm(float(margins["left"]))
         if margins.get("right"):
             section.right_margin = Cm(float(margins["right"]))
+
+    # Page number in the footer of every page except the cover.
+    section = d.sections[0]
+    section.different_first_page_header_footer = True
+    footer_p = section.footer.paragraphs[0]
+    footer_p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    _field(footer_p, "PAGE")
 
     # Cover — config values only; a hole is a visible [PENDIENTE], never a default.
     d.add_paragraph(cover_value(project, "university", "universidad"))
@@ -97,6 +141,16 @@ def build_docx(md: str, out: str, cfg: dict) -> None:
         d.add_paragraph(f"{role}: {name}")
     d.add_paragraph("Curso académico: " + cover_value(project, "academic_year", "curso académico"))
     d.add_page_break()
+
+    # Paginated table of contents (Word recomputes it: Ctrl+A then F9, or on print).
+    if typo.get("include_toc", True):
+        toc_title = d.add_paragraph()
+        toc_run = toc_title.add_run("Índice")
+        toc_run.bold = True
+        toc_run.font.size = Pt(base_pt + 4)
+        _field(d.add_paragraph(), r'TOC \o "1-3" \h \z \u',
+               "Índice pendiente de actualizar: seleccione todo (Ctrl+A) y pulse F9.")
+        d.add_page_break()
 
     for line in md.splitlines():
         s = line.rstrip()
