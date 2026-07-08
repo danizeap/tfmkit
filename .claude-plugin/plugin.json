@@ -1,6 +1,6 @@
 {
   "name": "tfmkit",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "The anti-ghostwriter. Write your TFM (Spanish master's thesis) with integrity: interview-first drafting from YOUR facts, web-verified citations, AI-tell hunting, a deterministic safety gate, and config-driven typesetting. The student remains the author.",
   "author": { "name": "Daniel Paez", "url": "https://github.com/danizeap" },
   "homepage": "https://github.com/danizeap/tfmkit",

@@ -36,6 +36,7 @@ is the one thing this tool refuses to do.
 In the student's working folder create:
 
 ```
+CLAUDE.md          (copy of ${CLAUDE_PLUGIN_ROOT}/config/workspace-CLAUDE.template.md)
 tfm.config.yaml    (copy of ${CLAUDE_PLUGIN_ROOT}/config/tfm.config.template.yaml)
 sources/           their curated materials (plain text preferred)
 facts/             fact sheets distilled from sources (tfmkit:ingest)
@@ -43,6 +44,10 @@ drafts/            per-section drafts (tfmkit:draft)
 references/        verified bibliography (tfmkit:cite)
 final/             assembled document and .docx (tfmkit:publish)
 ```
+
+`CLAUDE.md` is what makes every FUTURE chat in this folder self-orienting: the thesis
+spans many sessions, and the files — not the conversation — are the memory. Copy it
+verbatim; do not personalize it.
 
 ## 4. Gather the essentials (one question at a time)
 
